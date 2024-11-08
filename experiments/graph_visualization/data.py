@@ -37,10 +37,22 @@ class QAItem:
         self.parses = [self.QParse(o) for o in obj["Parses"]]
 
 # qa_items = []
+chain_df = pd.DataFrame(columns=["ID", "Chain", "ChainLength"])
 for i, q in qa_df.iterrows():
     # qa_items.append()
-    qa_item = QAItem(q)
-    print(qa_item.parses)
-    break
+    # qa_item = QAItem(q)
+    # print(qa_item.parses)
+    for p in q["Parses"]:
+        chain_df.loc[i] = {"ID": q["Question-ID"], "Chain": p["InferentialChain"], "ChainLength": len(p["InferentialChain"].split("."))}
 
-
+print(chain_df.ChainLength.describe())
+"""
+count    3996.000000
+mean        4.363363
+std         1.905949
+min         3.000000
+25%         3.000000
+50%         3.000000
+75%         7.000000
+max        13.000000
+"""
