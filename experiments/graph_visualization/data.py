@@ -10,6 +10,16 @@ entities_path = os.path.join(data_path, "data_FB15k_mid2name.txt")
 triplets_df = pd.read_csv(dataset_path, sep="\t", header=None, names=["head", "relation", "tail"])
 entities = pd.read_csv(entities_path, sep="\t", header=None, names=["mid", "entity"])
 
+def process_mid(mid):
+    """
+    provides consistency between id naming in the FB15k and FBQA
+    """
+    # replaces the / with . and drops the first slash
+    return '.'.join(mid[1:].split("/"))
+
+# inverse mapping {entity:mid}
+entities_dict = {entities[entities.mid == mid].iloc[0].entity : process_mid(mid)  for mid in entities.mid}
+
 # Load the QA dataset
 dataset_path = '../../datasets/FreebaseQA/FreebaseQA-eval.json'
 
@@ -19,40 +29,23 @@ with open(dataset_path, "r") as dataset:
 
 qa_df = pd.DataFrame.from_dict(data.get("Questions"))
 
-class QAItem:
-    class QParse:
-        class Answer:
-            def __init__(self, obj):
-                self.mid = obj["AnswersMid"]
-                self.name = obj["AnswersName"]
-        
-        def __init__(self, obj):
-            self.ID = obj["Parse-Id"]
-            self.chain = obj["InferentialChain"]
-            self.answers = [self.Answer(o) for o in obj["Answers"]]
-
-    def __init__(self, obj):
-        self.ID = obj["Question-ID"]
-        self.question = obj["RawQuestion"]
-        self.parses = [self.QParse(o) for o in obj["Parses"]]
-
-# qa_items = []
-chain_df = pd.DataFrame(columns=["ID", "Chain", "ChainLength"])
+found_entities = []
 for i, q in qa_df.iterrows():
-    # qa_items.append()
-    # qa_item = QAItem(q)
-    # print(qa_item.parses)
-    for p in q["Parses"]:
-        chain_df.loc[i] = {"ID": q["Question-ID"], "Chain": p["InferentialChain"], "ChainLength": len(p["InferentialChain"].split("."))}
+    tokens = q.RawQuestion.split()
+    for token in tokens:
+        if token in entities_dict:
+            found_entities.append(token)
+            print(i, q)
+            print(token, entities_dict[token])
+            print()
+print(len(found_entities))
 
-print(chain_df.ChainLength.describe())
-"""
-count    3996.000000
-mean        4.363363
-std         1.905949
-min         3.000000
-25%         3.000000
-50%         3.000000
-75%         7.000000
-max        13.000000
-"""
+# inferential chain constructor
+# 
+# chain_df = pd.DataFrame(columns=["ID", "Chain", "ChainLength"])
+# for i, q in qa_df.iterrows():
+#     # qa_items.append()
+#     # qa_item = QAItem(q)
+#     # print(qa_item.parses)
+#     for p in q["Parses"]:
+#         chain_df.loc[i] = {"ID": q["Question-ID"], "Chain": p["InferentialChain"], "ChainLength": len(p["InferentialChain"].split("."))}
