@@ -1,1 +1,4 @@
 FB15k-237.2/
+venv/
+inference/mistral_models/
+datasets/
