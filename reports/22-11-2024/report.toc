@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Plan}{3}{0}{1}
+\beamer@sectionintoc {2}{Current situation}{4}{0}{2}
+\beamer@sectionintoc {3}{Results}{5}{0}{3}
+\beamer@sectionintoc {4}{Next steps}{6}{0}{4}
