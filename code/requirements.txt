@@ -143,3 +143,4 @@ pystemmer
 tabulate
 scipy
 pypdf
+sentence-transformers

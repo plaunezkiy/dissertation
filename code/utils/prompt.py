@@ -14,7 +14,8 @@ ENTITY_PROMPT = PromptTemplate(
 
 LEN_LIMITED_PROMPT = """
 You will be given a context containing relevant entity triplets and a question.
-Using the context, you should answer the question below in under a sentence with no other text but the answer.
+Using the context, you should answer the question below in under a sentence 
+with no other text but the answer.
 Do not include any additional text.
 Separate individual answers by a coma.
 Context:

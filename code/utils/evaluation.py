@@ -3,6 +3,7 @@ from rouge import Rouge
 import pandas as pd
 from tabulate import tabulate
 import os
+from utils.preprocessing import preprocess_text
 
 rouge = Rouge()
 
@@ -31,11 +32,38 @@ class FBQA_Dataset(Dataset):
 
     def __init__(self):
         self.test_set = pd.read_json(self.test_set_path)
+        self.result_df = None
 
     @property    
     def answers(self):
         answers = self.test_set.Questions.apply(lambda t: t["Parses"][0]["Answers"][0]["AnswersName"][0])
         return answers
+
+    @property
+    def results(self):
+        if self.result_df:
+            return self.result_df
+        results = [self.answers.tolist()]
+        snames = []
+        for r_set in self.result_set_paths:
+            set_name = r_set.split("/")[-1].split(".")[0]
+            snames.append(set_name)
+            # compute the accuracy on the result set
+            result_df = pd.read_csv(r_set)
+            result_df.rename(columns={0: "Model"}, inplace=True)
+            results.append(result_df.Model.tolist())
+        result_df = pd.DataFrame(results, index=["Actual", *snames]).T
+        result_df["quid"] = self.test_set.Questions.apply(lambda t: t.get("Question-ID"))
+        self.result_df = result_df
+        return self.result_df
+    
+    def check_correct(self, model_answer, actual_answer):
+        m = preprocess_text(model_answer)
+        a = preprocess_text(actual_answer)
+        if m and a:
+            scores = rouge.get_scores(m[:300], a)[0]
+            return scores["rouge-l"]["r"] >= 0.5
+        return False
 
     def evaluate_answers(self):
         results = []
