@@ -28,6 +28,8 @@ class FBQA_Dataset(Dataset):
         "/datasets/FreebaseQA/results/bline.csv",
         "/datasets/FreebaseQA/results/bline2.csv",
         "/datasets/FreebaseQA/results/kb1.csv",
+        "/datasets/FreebaseQA/results/kb2.csv",
+        "/datasets/FreebaseQA/results/kb3.csv",
     ]
 
     def __init__(self):
@@ -94,6 +96,8 @@ class MetaQA_Dataset(Dataset):
         "/datasets/MetaQA/results/{hop}/bline.csv",
         "/datasets/MetaQA/results/{hop}/bline2.csv",
         "/datasets/MetaQA/results/{hop}/kb1.csv",
+        "/datasets/MetaQA/results/{hop}/kb2.csv",
+        "/datasets/MetaQA/results/{hop}/kb3.csv",
     ]
 
     def __init__(self):

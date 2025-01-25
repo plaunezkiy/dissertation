@@ -144,3 +144,4 @@ tabulate
 scipy
 pypdf
 sentence-transformers
+bm25s

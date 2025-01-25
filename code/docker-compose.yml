@@ -1,0 +1,22 @@
+services:
+  model:
+    image: model
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m jupyter notebook --ip 0.0.0.0 --no-browser --allow-root
+    ports:
+      - "8888:8888"    
+    volumes:
+      - ../inference/models:/models/
+      - ../datasets:/datasets
+      - ../code/utils:/model/utils/
+      - ../code/2_kg_inference:/model/2_kg_inference/
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+              count: all
+# watch -n 0.5 nvidia-smi 

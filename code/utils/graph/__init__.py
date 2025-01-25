@@ -30,7 +30,7 @@ class KGraphPreproc(NetworkxEntityGraph):
         # {proc_node: node_id}
         self.preprocessed_nodes = {}
         for node in self._graph.nodes:
-            proc_node = preprocess_text(node)
+            proc_node = preprocess_text(self.mid2name.get(node, ""))
             self.preprocessed_nodes[proc_node] = node
     
     def get_entity_knowledge(self, entity: str, depth: int=1) -> List[str]:
@@ -66,9 +66,11 @@ class KGraphPreproc(NetworkxEntityGraph):
     def get_fbkb_graph(cls):
         mid2name = pd.read_csv("/datasets/FB15k-237/mid2name.txt", sep="\t", header=None)
         mid2name_dict = dict(zip(mid2name[0], mid2name[1]))
+        name2mid_dict = dict(zip(mid2name[1], mid2name[0]))
         # 
         fbkb_graph = cls()
         fbkb_graph.mid2name = mid2name_dict
+        fbkb_graph.name2mid = name2mid_dict
         # 
         fbkb = pd.DataFrame()
         for split in ["train", "valid", "test"]:
@@ -93,3 +95,29 @@ class KGraphPreproc(NetworkxEntityGraph):
         fbkb_graph.generate_preprocessed_nodes()
         fbkb_graph._graph = fbkb_graph._graph.to_undirected()
         return fbkb_graph
+    
+    @classmethod
+    def get_metaqa_graph(cls):
+        mid2name = pd.read_csv("/datasets/MetaQA/KB/kb_entity_dict.txt", sep="\t", header=None)
+        mid2name_dict = dict(zip(mid2name[0], mid2name[1]))
+        name2mid_dict = dict(zip(mid2name[1], mid2name[0]))
+        
+        metaqa_kb = pd.read_csv("/datasets/MetaQA/KB/kb.txt", sep="|", header=None)
+        metaqa_kb.rename(columns={0: "subject", 1: "relation", 2: "object"}, inplace=True)
+        
+        # construct the KG
+        mqa_graph = cls()
+        mqa_graph.mid2name = mid2name_dict
+        mqa_graph.name2mid = name2mid_dict
+        for i, r in metaqa_kb.iterrows():
+            triplet = KnowledgeTriple(
+                name2mid_dict.get(r.subject, None),
+                r.relation,
+                name2mid_dict.get(r.object, None),
+            )
+            mqa_graph.add_triple(triplet)
+        # prep the graph
+        mqa_graph.generate_preprocessed_nodes()
+        # account for directional edges (llm will figure it out)
+        mqa_graph._graph = mqa_graph._graph.to_undirected()
+        return mqa_graph
