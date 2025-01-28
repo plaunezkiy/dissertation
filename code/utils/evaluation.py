@@ -30,6 +30,9 @@ class FBQA_Dataset(Dataset):
         "/datasets/FreebaseQA/results/kb1.csv",
         "/datasets/FreebaseQA/results/kb2.csv",
         "/datasets/FreebaseQA/results/kb3.csv",
+        "/datasets/FreebaseQA/results/sbert-kb1.csv",
+        "/datasets/FreebaseQA/results/sbert-kb2.csv",
+        "/datasets/FreebaseQA/results/sbert-kb3.csv",
     ]
 
     def __init__(self):
@@ -75,7 +78,7 @@ class FBQA_Dataset(Dataset):
             result_df = pd.read_csv(r_set)
             result_df.rename(columns={0: "Model"}, inplace=True)
             result_df["Actual"] = self.answers
-            result_df["Model"] = result_df["Model"].apply(lambda s: s.lower())
+            result_df["Model"] = result_df["Model"].fillna(" ").apply(lambda s: s.lower())
             # .apply(lambda t: t.iloc[1], axis=1))
             result_df["Correct"] = result_df.apply(lambda t: t.iloc[1] in t.iloc[0], axis=1)
             accuracy = sum(result_df.Correct) / len(result_df)
@@ -94,10 +97,11 @@ class MetaQA_Dataset(Dataset):
     hops = ["1hop", "2hop", "3hop"]
     result_set_paths = [
         "/datasets/MetaQA/results/{hop}/bline.csv",
-        "/datasets/MetaQA/results/{hop}/bline2.csv",
+        # "/datasets/MetaQA/results/{hop}/bline2.csv",
         "/datasets/MetaQA/results/{hop}/kb1.csv",
         "/datasets/MetaQA/results/{hop}/kb2.csv",
         "/datasets/MetaQA/results/{hop}/kb3.csv",
+        "/datasets/MetaQA/results/{hop}/sbert-kb3.csv",
     ]
 
     def __init__(self):

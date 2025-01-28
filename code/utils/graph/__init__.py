@@ -1,9 +1,13 @@
 from langchain_community.graphs.networkx_graph import NetworkxEntityGraph, KnowledgeTriple
 from typing import List
 import networkx as nx
+from tqdm import tqdm
 from utils.preprocessing import preprocess_text
 import pandas as pd
-
+import ast
+import os
+import csv
+import re
 
 class RankedTriplet:
     """
@@ -38,7 +42,7 @@ class KGraphPreproc(NetworkxEntityGraph):
         Custom implementation of entity search and knowledge extraction,
         instead of exact match, does preprocessing and then matches
         """
-        proc_node = " ".join(preprocess_text(entity))
+        proc_node = preprocess_text(entity)
         g_entity = self.preprocessed_nodes.get(proc_node, None)
         return super().get_entity_knowledge(g_entity, depth)
     
@@ -61,6 +65,43 @@ class KGraphPreproc(NetworkxEntityGraph):
         # Create the subgraph containing only the nodes within the specified depth
         subgraph = self._graph.subgraph(nodes_within_depth).copy()
         return subgraph
+    
+    def embed_triplets(self, embedding_function, cache_path):
+        # check cache
+        # print("Checking if already embedded")
+        if "embedding" in list(self._graph.edges(data=True))[0][2]:
+            # print("Already embedded")
+            return
+        print("Checking embedding cache")
+        if os.path.isfile(cache_path):
+            print("Loading embedding cache")
+            with open(cache_path, "r") as cache_file:
+                reader = csv.reader(cache_file)
+                # skip header
+                next(reader)
+                for (key, embedding) in tqdm(reader):
+                    embedding = re.sub(r"(\d)\s+", r"\1, ", embedding)
+                    # print(embedding)
+                    self._graph.edges[eval(key)]["embedding"] = eval(embedding)
+                return
+        # embedding
+        print("Computing embeddedings")
+        for u,v in tqdm(self._graph.edges()):
+            if "embedding" in self._graph.edges[u, v]:
+                continue
+            head = self.mid2name.get(u, None)
+            tail = self.mid2name.get(v, None)
+            rel = self._graph.edges[u, v].get("relation", None)
+            triplet = f"{head} {rel} {tail}"
+            self._graph.edges[u, v]["embedding"] = embedding_function(triplet)
+        # caching the result
+        print("Caching the computed embeddings")
+        with open(cache_path, "w") as cache_file:
+            writer = csv.writer(cache_file)
+            writer.writerow(["key", "embedding"])
+            for u,v in tqdm(self._graph.edges()):
+                embedding = self._graph.edges[u, v].get("embedding", None)
+                writer.writerow([(u,v), embedding])
 
     @classmethod
     def get_fbkb_graph(cls):

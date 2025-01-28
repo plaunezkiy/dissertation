@@ -107,7 +107,10 @@ def generate(
         next_token = sample(last_token_prelogits, temperature=temperature, top_p=0.8)
 
         if eos_id is not None:
-            if torch.get_default_device() == torch.device("cuda:1"):
+            # For some reason, when running on cuda:1, this fails
+            # as the tensors are split between cpu and gpu, causing an exception
+            # manually overriding this helps
+            if torch.get_default_device() == torch.device("cuda:1") or torch.get_default_device() == torch.device("cuda:0"):
                 is_finished = is_finished | (next_token == eos_id)
             else:
                 is_finished = is_finished | (next_token == eos_id).cpu()
@@ -166,12 +169,12 @@ class MistralLLM(LLM):
         model = Transformer.from_folder("/models/M7B")  # change to extracted model dir
         super().__init__(model=model, tokenizer=tokenizer) 
 
-    def get_response(self, prompt: str) -> str:
+    def get_response(self, prompt: str, temperature: float=0.35) -> str:
         tokenizer = self.tokenizer
         model = self.model
         completion_request = ChatCompletionRequest(messages=[UserMessage(content=prompt)])
         tokens = tokenizer.encode_chat_completion(completion_request).tokens
-        out_tokens, _ = generate([tokens], model, max_tokens=1024, temperature=0.35, eos_id=tokenizer.instruct_tokenizer.tokenizer.eos_id)
+        out_tokens, _ = generate([tokens], model, max_tokens=1024, temperature=temperature, eos_id=tokenizer.instruct_tokenizer.tokenizer.eos_id)
         result = tokenizer.instruct_tokenizer.tokenizer.decode(out_tokens[0])
         return result
 
