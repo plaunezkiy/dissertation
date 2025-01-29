@@ -1,0 +1,281 @@
+,Model,Actual,Correct,rouge-1,rouge-2,rouge-l
+267,"juan perón
+
+explanation:
+juan domingo perón served as the president of argentina from october 12, 1973, until his death on july 1, 1974. he was the country's third elected president, serving two terms from 1946 to 1955 before being overthrown in a military coup. he returned to power in 1973 after winning the elections in exile.",juan peron,False,0.041,0.0,0.041
+3713,"mozart did not write twinkle, twinkle, little star. it is based on a french tune called ""ah! vous dirai-je, maman."" the melody was later adapted by several composers, including mozart's student, haydn. the tune as we know it today was popularized by the english composer, maddalena sirmen.",wolfgang amadeus mozart,False,0.045,0.0,0.045
+2018,"u.s. navy
+
+in case you want more context, john f. kennedy served as a pt boat commander in the u.s. navy during world war ii. he received the navy and marine corps medal for his actions in the pacific theater.",united states navy,False,0.054,0.0,0.054
+2295,"the artist who created 'the lobster telephone' in 1936 and 'mae west lip sofa' in 1937 is erich consemüller. however, these pieces are often mistakenly attributed to salvador dalí due to their surrealist style.",salvador dali,False,0.059,0.0,0.059
+2057,"""the lord of the rings"" (the fellowship of the ring) was published on sept 21, 1937, but it was published as three separate volumes, and the subtitle ""there and back again"" was added later, appearing in the published version of ""the lord of the rings"" in 1954-55.",the hobbit,False,0.061,0.0,0.061
+127,"emirates aircraft
+
+(this horse was not named after the airline, but the horse's owner, sheikh ahmed bin saeed al maktoum, is also the chairman and ceo of emirates airline and group.)",rock of gibraltar,False,0.065,0.0,0.065
+1888,"bernie madoff
+
+(bernie madoff, a former financier, was sentenced to 150 years in prison in june 2009 for running a massive ponzi scheme, with his sons reporting him to federal authorities.)",bernard madoff,False,0.065,0.0,0.065
+678,"sir alec douglas-home
+
+(note: sir alec douglas-home became prime minister upon the assassination of harold macmillan's government, but macmillan himself did not die until 1986.)","robert jenkinson, 2nd earl of liverpool",False,0.069,0.0,0.069
+448,"the second place in the eurovision song contest for britain in 1972 was taken by the group ""brotherhood of man"" with the song ""beg, steal or borrow.""",the new seekers,False,0.077,0.0,0.077
+2469,"""the story of the feuding warrior-generals, unaware they are father and son, is told in 'the siege of krishnapoor' by matthew arnold.""",sohrab and rustum,False,0.08,0.0,0.08
+2759,"zoë heller
+
+(zoë heller is a london-born novelist and journalist of german parentage, known for writing everything you know and notes on a scandal.)",zoe heller,False,0.083,0.0,0.083
+3297,"""saving private ryan"" is the 1998 film that fictionalizes the battle of mount austen during the guadalcanal campaign in the second world war.",the thin red line,False,0.083,0.0,0.083
+1079,"""flushed away"" is the film featuring the voices of hugh grant, martin freeman, imelda staunton, and david tennant.",the pirates! in an adventure with scientists!,False,0.083,0.0,0.083
+554,"yes, roger moore filmed his scenes in the blake edwards film ""that's life!"" during a break from shooting octopussy.",curse of the pink panther,False,0.083,0.0,0.083
+537,"""the stranger"" by billy joel, specifically the song ""scenes from an italian restaurant,"" references the struggles of long island fishermen.",the downeaster alexa,False,0.091,0.0,0.091
+2409,"henry iii's mother and first wife were both named eleanor, followed by margaret of france as his second wife.",edward i of england,False,0.091,0.0,0.091
+1570,the ten bells pub was the site of william booth's first sermon and the murder of george cornell by ronnie kray.,the blind beggar,False,0.095,0.0,0.095
+2275,"""the letter"" is the top 10 hit of 1959 by 'the browns' that tells the story of little jimmy brown.",the three bells,False,0.095,0.0,0.095
+205,"""the first musical by andrew lloyd webber and tim rice was 'joseph and the amazing technicolor dreamcoat'.""",the likes of us,False,0.095,0.0,0.095
+1111,"""bedtime"" was the name of the sitcom starring samantha janus, denise van outen, and natalie walter as flatmates.",babes in the wood,False,0.095,0.0,0.095
+2034,"""heart of glass"" (not a johnny cash song, but blondie's hit single featured in the film roadie)",ring of fire,False,0.1,0.0,0.1
+3156,"auguste rodin, a u.s. born sculptor, created works such as genesis, the rock drill, and jacob and the angel.",jacob epstein,False,0.1,0.0,0.1
+3498,"the bay city rollers reached number one in the uk charts with sugar baby love on may 18th, 1974.",the rubettes,False,0.1,0.0,0.1
+3958,"""in 'midnight in paris', a character walks off the screen and into the real world.""",the purple rose of cairo,False,0.1,0.0,0.1
+1142,michelle yeoh played miss moneypenny in james bond films from 'goldeneye' in 1995 to 'die another day' in 2002.,samantha bond,False,0.105,0.0,0.105
+2109,"""radio 4's 'the hitchhiker's guide to the galaxy,"" kenneth williams and geoffrey mcgivern voiced all characters.",willo the wisp,False,0.105,0.0,0.105
+2740,they were known for their success in the national hockey league from the 1980s to early 1990s.,ice hockey,False,0.111,0.0,0.111
+202,"""the phantom of the opera"" is the stage musical, launched in 2004, based on wilkie collins' 1860 novel, featuring songs like ""you see i am no ghost"" and ""the holly and the ivy.""",the woman in white,False,0.118,0.0,0.118
+3328,"the only shakespeare play with an animal in the title is ""the tempest.""",the taming of the shrew,False,0.118,0.0,0.118
+2802,"horatio herbert kitchener, british military leader, defeated the mahdi at omdurman in 1898 and served as british secretary for war until his death in the sinking of the cruiser hampshire in 1916.","herbert kitchener, 1st earl kitchener",False,0.125,0.057,0.125
+1077,"""fawlty towers"" featured brief footage of a hippopotamus.",the fall and rise of reginald perrin,False,0.133,0.0,0.133
+1046,j.r. ewing took his new wife sue ellen home to meet his family.,bobby ewing,False,0.133,0.0,0.133
+2048,the bonzo dog doo-dah band released 'cloud cuckoo land' and 'sense and jollification'.,the lightning seeds,False,0.133,0.0,0.133
+3226,"the sweet reached number one in the uk charts with sad, sweet dreamer in october 1974.",sweet sensation,False,0.133,0.0,0.133
+3082,"george michael's last top 10 hit in the uk in 1996 was ""fastlove.""",the beatles,False,0.133,0.0,0.133
+3393,the society of london theatre's annual awards are known as the olivier awards.,laurence olivier award,False,0.143,0.0,0.143
+3410,tintin and snowy (the snowy is a dog character in the tintin comics),laurel and hardy,False,0.143,0.0,0.143
+1177,matthew smith succeeded david tennant as the doctor in tv's 'doctor who'.,matt smith,False,0.143,0.0,0.143
+3729,"the battle of manila bay, fought in 1898, was a conflict between the u.s. and spain that occurred after the treaty of washington had been signed.",battle of new orleans,False,0.143,0.069,0.143
+574,james brown played the role of the soul singer in the blues brothers.,reverend cleophus james,False,0.143,0.0,0.143
+1906,talisker is the only single malt whisky distilled on the isle of skye.,talisker distillery,False,0.143,0.0,0.143
+2312,the central line is coloured brown on the maps of the london underground.,bakerloo line,False,0.154,0.0,0.154
+1276,henry bolingbroke (later henry iv) was the son of edward iii.,john of gaunt,False,0.154,0.0,0.154
+2370,"""holiday"" was madonna's first number one single in the uk.",into the groove,False,0.154,0.0,0.154
+2999,west bromwich albion vs. queens park rangers (2013),west ham united f.c.,False,0.154,0.0,0.154
+909,justin welby (archbishop of canterbury) signs his name as justin welby roffey-welby.,bishop of rochester,False,0.154,0.0,0.154
+2288,the cavern pub liverpool has rooms named brahms and liszt.,philharmonic dining rooms,False,0.154,0.0,0.154
+3167,"phantom, ghost, dawn, cullinan, and spectre are the current rolls-royce models.",rolls-royce phantom,False,0.154,0.0,0.154
+532,the stealers wheel was formed by billy connolly and gerry rafferty.,the humblebums,False,0.154,0.0,0.154
+3855,"the controversy was known as the ""battersea park dog fight.""",brown dog affair,False,0.154,0.0,0.154
+1233,"prince charles, the heir to the british throne, is known as the duke of rothesay in scotland and has the middle names philip arthur george.","charles, prince of wales",False,0.231,0.0,0.154
+472,"""bermuda, yamalinkum"" is the national anthem of bermuda.",god save the queen,False,0.167,0.0,0.167
+1006,the volkswagen type 14 was commonly known as the volkswagen karmann-ghia.,volkswagen karmann ghia,False,0.167,0.0,0.167
+1827,"hallelujah, i'm a buh-liever, it's from ""hair spray"" the musical.",the heights,False,0.167,0.0,0.167
+1351,"a stylized version of a phoenix, symbolizing rebirth and resilience.",coat of arms,False,0.167,0.0,0.167
+3198,"fleet admiral (not a direct equivalent, but the highest rank)",vice admiral,False,0.167,0.0,0.167
+849,"the convict in charles dickens' novel, great expectations, is magwitch.",abel magwitch,False,0.167,0.0,0.167
+3103,mozart (died while composing requiem mass in d minor),wolfgang amadeus mozart,False,0.167,0.0,0.167
+3030,chesterfield fc play their home games at proact stadium.,chesterfield f.c.,False,0.167,0.0,0.167
+1327,"jar jar binks (in a new hope, the empire strikes back, attack of the clones, and revenge of the sith) and mace windu (in the phantom menace)",return of the jedi,False,0.167,0.071,0.167
+709,scott evans played the title character in bugsy malone.,scott baio,False,0.182,0.0,0.182
+1011,beethoven composed 'the creatures of prometheus and ritterballet.,ludwig van beethoven,False,0.182,0.0,0.182
+1642,"the major hit ""goodnite, sweetheart, goodnite"" was from the ramones.",the spaniels,False,0.182,0.0,0.182
+2463,delacroix painted the tiger hunt and the massacre at chios.,eugene delacroix,False,0.182,0.0,0.182
+3263,"john siddons, the actor, was sarah siddons' brother.",john philip kemble,False,0.182,0.0,0.182
+155,"dreamliner d7-ana
+
+(this refers to the specific boeing 787 aircraft, with the registration number d7-ana, delivered to all nippon airways.)",boeing 787 dreamliner,False,0.273,0.091,0.182
+222,harold ii was the last anglo-saxon king of england.,harold godwinson,False,0.182,0.0,0.182
+1861,"common snapdragon (not correct, impatiens is the correct answer)",impatiens walleriana,False,0.182,0.0,0.182
+1938,jacqueline lee bouvier married senator edward m. kennedy.,john f. kennedy,False,0.182,0.0,0.182
+2446,the spy who loved me (1977),the man with the golden gun,False,0.182,0.0,0.182
+3959,"the specials released the album ""word gets around"" first.",the stereophonics,False,0.2,0.0,0.2
+3709,sir andrew aguecheek's uncle is count orsino.,sir toby belch,False,0.2,0.0,0.2
+3829,the musical was yolanda and the thief.,the wizard of oz,False,0.2,0.0,0.2
+3139,a3 crosses the hammersmith bridge over the river thames.,london bridge,False,0.2,0.0,0.2
+3066,former mayor of chicago (2011-2019),white house chief of staff,False,0.2,0.0,0.2
+1539,"as the romanian violin duo ""the 2cellos""",the cheeky girls,False,0.2,0.0,0.2
+1387,portsmouth fc won the 2008 fa cup.,portsmouth f.c.,False,0.2,0.0,0.2
+741,"the first commercial nuclear power station in the world, calder hall, began operating its magnox reactors in 1956.",nuclear power plant,False,0.211,0.105,0.211
+879,renée zellweger plays roxie hart in 'chicago'.,renee zellweger,False,0.222,0.0,0.222
+1229,grafton street is dublin's main shopping centre.,o'connell street,False,0.222,0.0,0.222
+133,"""the 39 steps"" is the film.",the thirty-nine steps,False,0.222,0.0,0.222
+2365,fury road: the wasteland warrior,mad max: fury road,False,0.222,0.0,0.222
+2151,"the beatles with ""kon tiki"" in 1961.",the shadows,False,0.222,0.0,0.222
+2067,"the righteous brothers recorded ""juliet.""",the four pennies,False,0.222,0.0,0.222
+3058,"albert, duke of saxe-coburg and gotha","albert, prince consort",False,0.222,0.0,0.222
+1492,"""the wizard of oz"" is the most famous work by l. frank baum.",the wonderful wizard of oz,False,0.333,0.125,0.222
+1590,the good life (british series),the vicar of dibley,False,0.222,0.0,0.222
+2037,"hot five
+
+(this band was later expanded to the hot seven.)",louis armstrong and his hot five,False,0.235,0.125,0.235
+3305,mozart composed the 'haffner serenade'.,wolfgang amadeus mozart,False,0.25,0.0,0.25
+694,princess eugenie of york,"camilla, duchess of cornwall",False,0.25,0.0,0.25
+3100,éamon de valera was the president of the republic of ireland between 1959 and 1973.,eamon de valera,False,0.25,0.125,0.25
+3342,"""the sign of four""",the hound of the baskervilles,False,0.25,0.0,0.25
+2081,fyodor dostoevsky wrote the brothers karamazov.,fyodor dostoyevsky,False,0.25,0.0,0.25
+3596,sideshow bob's replacement is disco stu.,sideshow mel,False,0.25,0.0,0.25
+1400,vaughan williams composed a fantasia on a theme of thomas tallis in 1909.,ralph vaughan williams,False,0.267,0.143,0.267
+3264,"the war of austrian succession, spanning from 1740 to 1748, involved multiple european powers including prussia, bavaria, france, spain, sardinia, and saxony, over the succession of the austrian empire.",war of the austrian succession,False,0.333,0.187,0.267
+1260,u.s. dollar (usd),united states dollar,False,0.286,0.0,0.286
+2624,lord carlyon (alias campion),lord peter wimsey,False,0.286,0.0,0.286
+582,"""road to hong kong""",road to morocco,False,0.286,0.0,0.286
+2656,enid blyton wrote 'national velvet'.,enid bagnold,False,0.286,0.0,0.286
+775,alexander solzhenitsyn wrote cancer ward.,aleksandr solzhenitsyn,False,0.286,0.0,0.286
+918,"antietam battle
+
+(note: the battle is also known as the battle of sharpsburg.)",battle of antietam,False,0.429,0.143,0.286
+16,bobby moore and alan devonshire,alan taylor,False,0.286,0.0,0.286
+320,"egypt, united kingdom, germany, greece",united states,False,0.286,0.0,0.286
+1823,richard iii was the last king from the house of plantagenet.,richard ii of england,False,0.286,0.0,0.286
+2941,sharing and discovering creative ideas.,photo sharing,False,0.286,0.0,0.286
+2981,linus was the second pope.,pope linus,False,0.571,0.0,0.286
+2413,george iv (secretly) married maria fitzherbert in 1785.,george iv of the united kingdom,False,0.286,0.167,0.286
+3451,"""2001: a space odyssey""",a clockwork orange,False,0.286,0.0,0.286
+509,1 kings (or 1 kings 10),books of kings,False,0.286,0.0,0.286
+2480,st. johnstone plays its home games at mcdiarmid park.,st. johnstone f.c.,False,0.308,0.182,0.308
+2188,st. helens f.c. will play at langtree park in 2012.,st helens,False,0.308,0.182,0.308
+2561,the comedy of errors (mistresses ford and page),the merry wives of windsor,False,0.308,0.0,0.308
+3197,the duke of kent holds the title 'baron greenwich'.,"prince philip, duke of edinburgh",False,0.308,0.167,0.308
+3993,figure skating,short track speed skating,False,0.333,0.0,0.333
+3169,chelsea football club,chelsea f.c.,False,0.333,0.0,0.333
+3011,derby county play home games at pride park.,derby county f.c.,False,0.333,0.2,0.333
+366,bagheera was a panther.,black panther,False,0.333,0.0,0.333
+607,"a. saul bellow (incorrect)
+b. kazuo ishiguro (incorrect)
+c. a.s. byatt (correct)
+d. j.k. rowling (incorrect)",a. s. byatt,False,0.333,0.211,0.333
+2677,atlantic city,"atlantic city, new jersey",False,0.333,0.0,0.333
+447,macheath (mac the knife),captain macheath,False,0.333,0.0,0.333
+1870,lakshadweep islands,andaman and nicobar islands,False,0.333,0.0,0.333
+3591,the lord of the rings,the hobbit,False,0.333,0.0,0.333
+3590,the lord of the rings,the hobbit,False,0.333,0.0,0.333
+1835,le notre-dame de paris by victor hugo,notre dame de paris,False,0.364,0.222,0.364
+810,"the film, high society is a musical adaptation of the 1939 comedy film, philadelphia story.",the philadelphia story,False,0.375,0.125,0.375
+2734,james mcneill whistler painted nocturne; blue and silver - chelsea in 1871.,james abbott mcneill whistler,False,0.375,0.143,0.375
+2831,jean-michel jarre,jean michel jarre,False,0.4,0.0,0.4
+2640,waterloo (1815),battle of waterloo,False,0.4,0.0,0.4
+3288,rangers fc,rangers f.c.,False,0.4,0.0,0.4
+595,amazon river basin,amazon rainforest,False,0.4,0.0,0.4
+3083,san sebastián (donostia),san sebastian,False,0.4,0.0,0.4
+1899,edward iii married isabella of france.,edward ii of england,False,0.4,0.0,0.4
+2310,st. james's park,green park,False,0.4,0.0,0.4
+3486,arabian gulf,gulf of oman,False,0.4,0.0,0.4
+238,"richard ii had two wives, anne of bohemia and isabella of valois.",richard ii of england,False,0.4,0.143,0.4
+1940,football (soccer) teams,football team,False,0.4,0.0,0.4
+1769,henry ford sr.,edsel ford,False,0.4,0.0,0.4
+2937,"""dark side of the moon"" was released in march 1973.",the dark side of the moon,False,0.4,0.286,0.4
+1902,little jimmy osmond,jimmy boyd,False,0.4,0.0,0.4
+2352,leia organa (skywalker),princess leia,False,0.4,0.0,0.4
+215,jennifer love hewitt,jennifer lopez,False,0.4,0.0,0.4
+168,andy fairweather-low,andy fairweather low,False,0.4,0.0,0.4
+2335,baton rouge,"baton rouge, louisiana",False,0.4,0.0,0.4
+3934,the chiltern hills,quantock hills,False,0.4,0.0,0.4
+1873,'lungs' is the 2009 debut album by florence + the machine.,florence and the machine,False,0.429,0.154,0.429
+3672,transformers: the last knight,transformers: dark of the moon,False,0.444,0.0,0.444
+3317,a novel by carlos ruiz zafón.,carlos ruiz zafon,False,0.444,0.286,0.444
+1050,"""rocketjuice & the moon""","the good, the bad & the queen",False,0.444,0.222,0.444
+2020,"the royal flying doctor service was established in 1928 by reverend john flynn in cloncurry, queensland, australia.",royal flying doctor service of australia,False,0.455,0.286,0.455
+621,the battle of bosworth field was in the war of the roses.,wars of the roses,False,0.462,0.286,0.462
+1455,west ham united fc (originally thames ironworks fc),west ham united f.c.,False,0.462,0.364,0.462
+2843,queen of the south play their home games at palmerston park.,queen of the south f.c.,False,0.471,0.4,0.471
+3676,captain flint,captain smollett,False,0.5,0.0,0.5
+3818,nicolás maduro,nicolas maduro,False,0.5,0.0,0.5
+3788,u.s. marshals service,united states marshals service,False,0.5,0.333,0.5
+3769,nixon (1972),richard nixon,False,0.5,0.0,0.5
+3403,ireland,republic of ireland,False,0.5,0.0,0.5
+3662,thames river,river thames,False,1.0,0.0,0.5
+3562,severn river,river severn,False,1.0,0.0,0.5
+3521,kattegat sea,baltic sea,False,0.5,0.0,0.5
+3516,madame butterfly,madama butterfly,False,0.5,0.0,0.5
+3440,galápagos penguin,galapagos penguin,False,0.5,0.0,0.5
+18,seb coe,sebastian coe,False,0.5,0.0,0.5
+456,lagan river,river lagan,False,1.0,0.0,0.5
+1978,the scaffold,the hollies,False,0.5,0.0,0.5
+2246,eugène delacroix,eugene delacroix,False,0.5,0.0,0.5
+2330,fermanagh (county),county fermanagh,False,0.5,0.0,0.5
+2311,metropolitan line,central line,False,0.5,0.0,0.5
+1765,the beatles,the fourmost,False,0.5,0.0,0.5
+2836,michael gambon,michael hordern,False,0.5,0.0,0.5
+1640,felicity kendal,felicity kendall,False,0.5,0.0,0.5
+1608,j.p. donleavy wrote 'the ginger man' in 1955.,j. p. donleavy,False,0.5,0.4,0.5
+2748,appalachian mountains,rocky mountains,False,0.5,0.0,0.5
+2610,metical (mzn),mozambican metical,False,0.5,0.0,0.5
+2645,mercury program,project mercury,False,0.5,0.0,0.5
+815,gothic literature,gothic fiction,False,0.5,0.0,0.5
+1228,liffey river,river liffey,False,1.0,0.0,0.5
+1248,fianna fáil,fianna fail,False,0.5,0.0,0.5
+1016,fyodor dostoevsky,fyodor dostoyevsky,False,0.5,0.0,0.5
+3293,the beatles,the coasters,False,0.5,0.0,0.5
+1302,joseph merrick,john merrick,False,0.5,0.0,0.5
+1335,severn river,river severn,False,1.0,0.0,0.5
+1561,"detroit, michigan","flint, michigan",False,0.5,0.0,0.5
+2642,"thrush was the arch-enemies of napoleon solo, ilya kuriakin, and the u.n.c.l.e. agency.",the man from u.n.c.l.e.,False,0.5,0.348,0.5
+876,anton chekhov,anton chekov,False,0.5,0.0,0.5
+908,football clubs,football team,False,0.5,0.0,0.5
+986,léo delibes,leo delibes,False,0.5,0.0,0.5
+3092,jacky wilson,jackie wilson,False,0.5,0.0,0.5
+801,camille saint-saëns,camille saint-saens,False,0.5,0.0,0.5
+802,camille saint-saëns,camille saint-saens,False,0.5,0.0,0.5
+800,george bizet,georges bizet,False,0.5,0.0,0.5
+600,comminuted fracture,greenstick fracture,False,0.5,0.0,0.5
+611,destiny's child,destinys child,False,0.5,0.0,0.5
+737,caribbean archipelago,lucayan archipelago,False,0.5,0.0,0.5
+790,paul cézanne,paul cezanne,False,0.5,0.0,0.5
+3233,w.c. handy composed the saint louis blues.,w. c. handy,False,0.545,0.444,0.545
+3696,queen elizabeth i,elizabeth i of england,False,0.571,0.4,0.571
+1453,accrington stanley fc,accrington stanley f.c.,False,0.571,0.4,0.571
+3378,northampton town fc,northampton town f.c.,False,0.571,0.4,0.571
+2574,queen elizabeth i,elizabeth i of england,False,0.571,0.4,0.571
+2447,king henry viii,henry viii of england,False,0.571,0.4,0.571
+3028,prince albert ii of monaco,"albert ii, prince of monaco",False,0.8,0.25,0.6
+1879,j.b. priestley wrote an inspector calls.,j. b. priestley,False,0.6,0.5,0.6
+2331,"the answer is ""mary tyler moore show.""",the mary tyler moore show,False,0.615,0.364,0.615
+2451,james ii,james ii of england,False,0.667,0.5,0.667
+2453,p.l. travers (helen lyndon goff),p. l. travers,False,0.667,0.571,0.667
+235,henry viii,henry viii of england,False,0.667,0.5,0.667
+2418,louis xvi,louis xvi of france,False,0.667,0.5,0.667
+2551,bourbon,bourbon whiskey,False,0.667,0.0,0.667
+2708,john le carré,john le carre,False,0.667,0.5,0.667
+2878,thirty years war,thirty years' war,False,0.667,0.0,0.667
+1670,drachma,greek drachma,False,0.667,0.0,0.667
+2534,beavis and butt-head,beavis and butthead,False,0.667,0.5,0.667
+496,alfred lord tennyson,"alfred, lord tennyson",False,0.667,0.5,0.667
+3923,dutch,dutch people,False,0.667,0.0,0.667
+3828,tennis,table tennis,False,0.667,0.0,0.667
+3074,edgar allan poe,edgar allen poe,False,0.667,0.0,0.667
+757,ramanujan,srinivasa ramanujan,False,0.667,0.0,0.667
+964,alfred lord tennyson,"alfred, lord tennyson",False,0.667,0.5,0.667
+850,catherine de medici,catherine de' medici,False,0.667,0.0,0.667
+651,thames,river thames,False,0.667,0.0,0.667
+15,leeds united,leeds united f.c.,False,0.667,0.5,0.667
+239,james i,james vi and i,False,0.667,0.0,0.667
+578,2008 beijing olympics,2008 summer olympics,False,0.667,0.0,0.667
+3277,world war ii,world war 2,False,0.667,0.5,0.667
+934,sonny & cher,sonny and cher,False,0.667,0.0,0.667
+1901,ss great eastern,ss great britain,False,0.667,0.5,0.667
+2139,manchester city,manchester city f.c.,False,0.667,0.5,0.667
+2989,trinidad and tobago,trinidad & tobago,False,0.667,0.0,0.667
+3001,manchester united,manchester united f.c.,False,0.667,0.5,0.667
+2815,edward iii,edward iii of england,False,0.667,0.5,0.667
+2595,"ernesto ""che"" guevara",ernesto che guevara,False,0.667,0.0,0.667
+2323,grauman's chinese theatre,tcl chinese theatre,False,0.667,0.5,0.667
+1824,e.m. forster wrote 'howards end'.,e. m. forster,False,0.667,0.571,0.667
+1968,yen,japanese yen,False,0.667,0.0,0.667
+3575,west ham united fc,west ham united f.c.,False,0.667,0.571,0.667
+299,t.s. eliot wrote 'ash wednesday'.,t. s. eliot,False,0.667,0.571,0.667
+200,peter,saint peter,False,0.667,0.0,0.667
+1325,hans christian andersen,hans christian anderson,False,0.667,0.5,0.667
+1379,blackburn rovers,blackburn rovers f.c.,False,0.667,0.5,0.667
+1281,henry viii,henry viii of england,False,0.667,0.5,0.667
+1380,blackburn rovers,blackburn rovers f.c.,False,0.667,0.5,0.667
+3189,southend united,southend united f.c.,False,0.667,0.5,0.667
+3246,trinity college dublin,"trinity college, dublin",False,0.667,0.0,0.667
+650,panic! at the disco,panic at the disco,False,0.75,0.667,0.75
+2982,john paul ii (1978-2005),pope john paul ii,False,0.75,0.667,0.75
+3825,james sherman,james s. sherman,False,0.8,0.0,0.8
+135,pickwick papers,the pickwick papers,False,0.8,0.667,0.8
+973,douglas c. engelbart,douglas engelbart,False,0.8,0.0,0.8
+2649,pickwick papers,the pickwick papers,False,0.8,0.667,0.8
+2264,william seward,william h. seward,False,0.8,0.0,0.8
+2980,paul vi,pope paul vi,False,0.8,0.667,0.8
+2289,william gladstone,william ewart gladstone,False,0.8,0.0,0.8
+106,federal reserve,federal reserve system,False,0.8,0.667,0.8
+107,manhattan transfer,the manhattan transfer,False,0.8,0.667,0.8
+3119,centre pompidou,centre georges pompidou,False,0.8,0.0,0.8
+2239,the wizard of oz,the wonderful wizard of oz,False,0.889,0.571,0.889

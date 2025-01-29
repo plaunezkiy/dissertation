@@ -25,6 +25,8 @@ Context:
 
 Question:
 {question}
+
+A:
 """
 
 GRAPH_QA_PROMPT = PromptTemplate(
@@ -38,6 +40,8 @@ Do not include any additional text.
 Separate individual answers by a coma.
 Question:
 {question}
+
+A:
 """
 
 NO_CONTEXT_PROMPT = PromptTemplate(
@@ -56,6 +60,8 @@ Context:
 
 Question:
 {question}
+
+A:
 """
 
 EVALUATE_CONTEXT_PROMPT = PromptTemplate(
@@ -76,7 +82,7 @@ Relations: {relations}
 A: 
 """
 
-RERANK_TRIPLETS_PROMPT = """Rerank the triplets based on how well they help to build a reasoning chain to answer the question and rate their contribution from on scale from 0 to 1.
+RERANK_TRIPLETS_PROMPT = """Rerank the triplets based on how well they help to build a reasoning chain to answer the question and rate their contribution on scale from 0 to 1.
 Output in the following format:
 1. (relation;score) reason
 Only use the relations provided. Do not produce any other text.
@@ -84,4 +90,14 @@ Question: {question}
 Topic Entity: {entity}
 Relations: {relations}
 A: 
+"""
+
+RERANK_CANDIDATE_ENTITIES_PROMPT = """Rerank the entities based on how well they help to build a reasoning chain to answer the question and rate the contribution on scale from 0 to 1.
+Output in the following format:
+1. (entity;score) reason
+Only use the entities provided. Do not produce any other text.
+Question: {question}
+Relation: {relation}
+Entities: {entities}
+A:
 """
