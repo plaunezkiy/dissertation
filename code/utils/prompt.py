@@ -101,3 +101,47 @@ Relation: {relation}
 Entities: {entities}
 A:
 """
+
+PREDICT_TAIL_PROMPT = """
+You are an expert in knowledge graphs and natural language understanding. Your task is to help explore relevant relationships from given topic entities that can aid in answering a question.
+Instructions:
+Input: You will be provided with a natural language question and a list of topic entities extracted from that question.
+Objective: Analyze the question to understand its context and what information might be needed to answer it. Then, generate a list of {no_items} candidate relationship labels (i.e., edge types) that could be used to navigate a knowledge graph starting from each entity.
+Requirements:
+Relevance: The candidate relationship labels must be pertinent to the context of the question.
+Conciseness: Provide a brief description (1–2 sentences) of why each relationship label might help answer the question.
+Format: Return your answer as a numbered list in the following format: 1. (Entity; Relationship label; Reason)
+Do not produce any other text.
+
+Question: “What awards has Albert Einstein received?”
+Topic Entities: Albert Einstein;
+Candidate relationship labels ({no_items} items):
+1. (Albert Einstein; awardReceived; Connects a person to the awards they have received.)
+2. (Albert Einstein; honorificAward; Links individuals to awards given in honor of their achievements.)
+
+Question: “{question}”
+Topic Entities: {entities}
+Candidate relationship labels (5 items):
+"""
+
+PREDICT_EDGE_PROMPT = '''
+You are an expert in knowledge graphs and natural language understanding. Your task is to help explore relevant relationships from given topic entities that can aid in answering a question.
+Instructions:
+Input: You will be provided with a natural language question and a list of topic entities extracted from that question.
+Objective: Analyze the question to understand its context and what information might be needed to answer it. Then, generate a list of {no_items} candidate relationship labels (i.e., edge types) that could be used to navigate a knowledge graph starting from each entity.
+Requirements:
+Relevance: The candidate relationship labels must be pertinent to the context of the question.
+Conciseness: Provide a brief description (1–2 sentences) of why each relationship label might help answer the question.
+Format: Return your answer as a numbered list in the following format: 1. (Entity; Relationship label; Reason)
+Do not produce any other text.
+
+Question: “What awards has Albert Einstein received?”
+Topic Entities: Albert Einstein;
+Candidate relationship labels ({no_items} items):
+1. (Albert Einstein; awardReceived; Connects a person to the awards they have received.)
+2. (Albert Einstein; honorificAward; Links individuals to awards given in honor of their achievements.)
+
+Question: “{question}”
+Topic Entities: {entities}
+Candidate relationship labels (5 items):
+'''

@@ -1,4 +1,4 @@
-from typing import Any, Dict, Iterator, List, Mapping, Optional, Literal
+    from typing import Any, Dict, Iterator, List, Mapping, Optional, Literal
 from langchain_core.callbacks.manager import CallbackManagerForChainRun
 from langchain_community.graphs.networkx_graph import get_entities
 from langchain.chains import GraphQAChain
