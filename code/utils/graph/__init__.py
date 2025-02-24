@@ -114,9 +114,11 @@ class KGraphPreproc(NetworkxEntityGraph):
         fbkb_graph.name2mid = name2mid_dict
         # 
         fbkb = pd.DataFrame()
-        for split in ["train", "valid", "test"]:
-            path = f"/datasets/FB15k-237/{split}.txt"
-            split_df = pd.read_csv(path, sep="\t", header=None)
+        for split_path in [
+                "/datasets/FB15k-237/kb_dump.csv",
+                *[f"/datasets/FB15k-237/{split}.txt" for split in ["train", "valid", "test"]]
+            ]:
+            split_df = pd.read_csv(split_path, sep="\t", header=None)
             fbkb = pd.concat([fbkb, split_df])
         fbkb.rename(columns={0: "subject", 1: "relation", 2: "object"}, inplace=True)
         # 

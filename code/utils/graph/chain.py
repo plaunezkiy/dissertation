@@ -1,4 +1,4 @@
-    from typing import Any, Dict, Iterator, List, Mapping, Optional, Literal
+from typing import Any, Dict, Iterator, List, Mapping, Optional, Literal
 from langchain_core.callbacks.manager import CallbackManagerForChainRun
 from langchain_community.graphs.networkx_graph import get_entities
 from langchain.chains import GraphQAChain
@@ -68,7 +68,7 @@ class GraphChain(GraphQAChain):
             top_triplets, score = retriever.retrieve(
                 question_tokens,
                 k=len(triplets),
-                corpus=triplets,
+                corpus=list(map(lambda t: t[0], triplets)),
                 # return_as="tuple",
                 sorted=True,
             )
@@ -120,9 +120,9 @@ class GraphChain(GraphQAChain):
 
         if self.ranking_strategy == "sbert":
             _run_manager.on_text("Embedding the graph", color="green", end="\n", verbose=self.verbose)
-            model = SentenceTransformer("all-MiniLM-L6-v2")
+            model = SentenceTransformer("all-mpnet-base-v2")
             embed_sbert = lambda q: model.encode(q)
-            # self.graph.embed_triplets(embedding_function=embed_sbert, cache_path=self.sbert_cache_path)
+            self.graph.embed_triplets(embedding_function=embed_sbert, cache_path=self.sbert_cache_path)
 
         # extract triplets
         triplets = self.extract_triplets(entities, depth=self.exploration_depth)

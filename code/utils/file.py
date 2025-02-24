@@ -12,9 +12,15 @@ def check_or_create_file(path):
     os.mknod(path)
 
 
-def export_results_to_file(path, results):
+def export_results_to_file(path, results, id_list=None):
     with open(path, "w") as f:
         writer = csv.writer(f)
-        writer.writerow(["Model"])
-        for r in results:
-            writer.writerow([str(r)])
+        if id_list:
+            writer.writerow(["", "Model"])
+        else:
+            writer.writerow(["Model"])
+        for i, r in enumerate(results):
+            if id_list:
+                writer.writerow([id_list[i], str(r)])
+            else:
+                writer.writerow([str(r)])

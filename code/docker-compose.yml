@@ -11,7 +11,9 @@ services:
       - ../inference/models:/models/
       - ../datasets:/datasets
       - ../code/utils:/model/utils/
+      - ../code/1_baseline:/model/1_baseline/
       - ../code/2_kg_inference:/model/2_kg_inference/
+      - ../code/3_link_prediction:/model/3_link_prediction/
     deploy:
       resources:
         reservations:

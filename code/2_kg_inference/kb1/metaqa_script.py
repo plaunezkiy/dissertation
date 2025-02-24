@@ -4,8 +4,8 @@ import os
 from tqdm import tqdm
 import torch
 import gc
-from langchain_community.graphs.networkx_graph import KnowledgeTriple
-from langchain.chains import GraphQAChain
+from utils.graph import KGraphPreproc
+from utils.graph.chain import GraphQAChain
 from utils.llm.mistral import MistralLLM
 from utils.prompt import ENTITY_PROMPT, GRAPH_QA_PROMPT
 from utils.graph import KGraphPreproc
@@ -15,20 +15,7 @@ from utils.file import export_results_to_file
 metaqa_kb = pd.read_csv("/datasets/MetaQA/KB/kb.txt", sep="|", header=None)
 metaqa_kb.rename(columns={0: "subject", 1: "relation", 2: "object"}, inplace=True)
 # construct the KG
-mqa_graph = KGraphPreproc()
-for i, r in metaqa_kb.iterrows():
-    triplet = KnowledgeTriple(
-        r.subject,
-        r.relation,
-        r.object,
-    )
-    mqa_graph.add_triple(triplet)
-# prep the graph
-mqa_graph.generate_preprocessed_nodes()
-# account for directional edges (llm will figure it out)
-mqa_graph._graph = mqa_graph._graph.to_undirected()
-
-# set up inference
+mqa_graph = KGraphPreproc.get_metaqa_graph()
 mistral = MistralLLM()
 chain = GraphQAChain.from_llm(
     llm=mistral, 

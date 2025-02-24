@@ -1,12 +1,11 @@
 import pandas as pd
 import torch
 import gc
-import Stemmer
-import re
 from tqdm import tqdm
 import csv
 import gc
-
+from utils.graph import KGraphPreproc
+from utils.file import export_results_to_file
 
 fbqa = pd.read_json("/datasets/FreebaseQA/FreebaseQA-eval.json")
 def get_fbqa_data(question_row):
@@ -22,32 +21,7 @@ def get_fbqa_data(question_row):
     return question, answer
 
 ####### loading kb
-mid2name = pd.read_csv("/datasets/FB15k-237/mid2name.txt", sep="\t", header=None)
-mid2name[1] = mid2name[1].apply(preprocess_text)
-
-
-mid2name_dict = dict(zip(mid2name[0], mid2name[1]))
-name2mid = dict(zip(mid2name[1], mid2name[0]))
-
-fbkb = pd.DataFrame()
-for split in ["train", "valid", "test"]:
-    path = f"/datasets/FB15k-237/{split}.txt"
-    split_df = pd.read_csv(path, sep="\t", header=None)
-    fbkb = pd.concat([fbkb, split_df])
-fbkb.rename(columns={0: "subject", 1: "relation", 2: "object"}, inplace=True)
-
-
-####### create a graph
-from langchain_community.graphs.networkx_graph import NetworkxEntityGraph, KnowledgeTriple
-fbkb_graph = NetworkxEntityGraph()
-for i, r in fbkb.iterrows():
-    triplet = KnowledgeTriple(
-        r.subject,
-        r.relation,
-        r.object,
-    )
-    fbkb_graph.add_triple(triplet)
-
+fbkb_graph = KGraphPreproc.get_fbkb_graph()
 
 ###### inference
 from langchain_core.prompts.prompt import PromptTemplate
@@ -122,14 +96,5 @@ for i, r in tqdm(list(fbqa.iterrows())):
     results.append(response)
 
     if i % 250 == 0:
-        with open(bline_path, "w") as f:
-            writer = csv.writer(f)
-            writer.writerow(["Model"])
-            for r in results:
-                writer.writerow([str(r)])
-
-with open(bline_path, "w") as f:
-    writer = csv.writer(f)
-    writer.writerow(["Model"])
-    for r in results:
-        writer.writerow([str(r)])
+        export_results_to_file(bline_path, results)
+export_results_to_file(bline_path, results)
