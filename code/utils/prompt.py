@@ -137,11 +137,11 @@ Do not produce any other text.
 
 Question: “What awards has Albert Einstein received?”
 Topic Entities: Albert Einstein;
-Candidate relationship labels ({no_items} items):
+Candidate relationship labels (2 items):
 1. (Albert Einstein; awardReceived; Connects a person to the awards they have received.)
 2. (Albert Einstein; honorificAward; Links individuals to awards given in honor of their achievements.)
 
 Question: “{question}”
 Topic Entities: {entities}
-Candidate relationship labels (5 items):
+Candidate relationship labels ({no_items} items):
 '''

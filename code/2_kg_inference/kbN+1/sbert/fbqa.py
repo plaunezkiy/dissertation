@@ -1,3 +1,4 @@
+import gc
 import os
 import torch
 import gc
@@ -12,7 +13,7 @@ from utils.llm.mistral import MistralLLM
 from utils.prompt import GRAPH_QA_PROMPT, ENTITY_PROMPT
 from utils.file import export_results_to_file
 
-device = torch.device("cuda:0")
+device = torch.device("cuda:1")
 torch.cuda.set_device(device)
 torch.set_default_device(device)
 
@@ -65,9 +66,9 @@ for depth in [4, 5, 6, 7, 8, 9, 10, 11]:
     print(depth)
     # set the depth
     chain.exploration_depth = depth
-    chain.ranking_strategy = "bm25"
+    chain.ranking_strategy = "sbert"
     # init experiment
-    experiment_name = f"kb{depth}"
+    experiment_name = f"sbert-kb{depth}"
     res_path = f"/datasets/FreebaseQA/results/{experiment_name}.csv"
     results = []
     id_list = []
@@ -94,5 +95,5 @@ for depth in [4, 5, 6, 7, 8, 9, 10, 11]:
             export_results_to_file(res_path, results, id_list)
     export_results_to_file(res_path, results, id_list)
 
-# python -m 2_kg_inference.kbN+1.bm25.fbqa &
-# python -m 2_kg_inference.kbN.bm25.mqa &
+# python -m 2_kg_inference.kbN+1.sbert.fbqa &
+# python -m 2_kg_inference.kbN+1.bm25.mqa &

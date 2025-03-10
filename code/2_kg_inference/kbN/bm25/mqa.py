@@ -46,10 +46,11 @@ for hop in ["1hop", "2hop", "3hop"]:
     metaqa.rename(columns={1: "Question", 2: "Answers"}, inplace=True)
 
 
-    for depth in [1, 3]:
+    for depth in [4]:
         print(f"depth: {depth}")
         # set the depth
         chain.exploration_depth = depth
+        chain.ranking_strategy = "bm25"
         # init experiment
         experiment_name = f"kb{depth}"
         res_path = f"/datasets/MetaQA/results/{hop}/{experiment_name}.csv"
@@ -73,3 +74,5 @@ for hop in ["1hop", "2hop", "3hop"]:
             if c % 10 == 0:
                 export_results_to_file(res_path, results, id_list)
         export_results_to_file(res_path, results, id_list)
+
+# python -m 2_kg_inference.kbN.bm25.mqa &

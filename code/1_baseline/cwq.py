@@ -32,4 +32,3 @@ for c, (i, r) in enumerate(tqdm(list(cwq.iterrows()))):
     if c % 10 == 0:
         export_results_to_file(res_path, results, id_list)
 export_results_to_file(res_path, results, id_list)
-

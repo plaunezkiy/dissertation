@@ -1,12 +1,33 @@
 import csv
 from rouge import Rouge
 import pandas as pd
+from typing import List
 from tabulate import tabulate
 import ast
 import os
 from utils.preprocessing import preprocess_text
+import sklearn.metrics as f1_score
 
 rouge = Rouge()
+
+
+def calculate_em_accuracy(actual: List[str], model: List[str]) -> float:
+    """
+    Calculate the Exact Match accuracy of the model predictions.
+    Returns the maximum exact match.
+    """
+    for a, m in zip(actual, model):
+        if a == m:
+            return 1
+    return 0
+
+
+def calculate_f1_accuracy(actual: List[str], model: List[str]) -> float:
+    """
+    Calculate the F1 score of the model predictions.
+    """
+    f1 = f1_score.f1_score(actual, model)
+    return f1
 
 
 class Dataset:
@@ -29,9 +50,10 @@ class CWQ_Dataset(Dataset):
         "/datasets/CWQ/results/bline.csv",
         # "/datasets/CWQ/results/bline2.csv",
         "/datasets/CWQ/results/kb-path.csv",
-        "/datasets/CWQ/results/kb1.csv",
-        "/datasets/CWQ/results/kb2.csv",
-        "/datasets/CWQ/results/kb3.csv",
+        *[
+            f"/datasets/CWQ/results/kb{d}.csv" 
+            for d in range(1, 4)
+        ],
         "/datasets/CWQ/results/sbert-kb1.csv",
         "/datasets/CWQ/results/sbert-kb2.csv",
         "/datasets/CWQ/results/sbert-kb3.csv",
@@ -39,6 +61,8 @@ class CWQ_Dataset(Dataset):
 
     def __init__(self):
         self.test_set = pd.read_csv(self.test_set_path, index_col=0)
+        self.test_set["topic_ids"] = self.test_set["topic_ids"].apply(ast.literal_eval)
+        self.test_set["answer_ids"] = self.test_set["answer_ids"].apply(ast.literal_eval)
         self.result_df = None
 
     @property
@@ -90,6 +114,7 @@ class CWQ_Dataset(Dataset):
         Pick the highest one and return as final.
         """
         max_r = 0
+        # print(model_answers)
         for a in actual_answers:
             for m in model_answers:
                 if m and a:
@@ -101,7 +126,7 @@ class CWQ_Dataset(Dataset):
     def tabulate_performance(self):
         results = self.evaluate_answers()
         print("CWQ")
-        print(tabulate(results, tablefmt="grid", headers=["Method", "Test Set"]))
+        print(tabulate(results, tablefmt="grid", headers=["", "EM", "F1"]))
 
 
 class FBQA_Dataset(Dataset):
@@ -110,12 +135,15 @@ class FBQA_Dataset(Dataset):
         "/datasets/FreebaseQA/results/bline.csv",
         "/datasets/FreebaseQA/results/bline2.csv",
         "/datasets/FreebaseQA/results/kb-path.csv",
-        "/datasets/FreebaseQA/results/kb1.csv",
-        "/datasets/FreebaseQA/results/kb2.csv",
-        "/datasets/FreebaseQA/results/kb3.csv",
-        "/datasets/FreebaseQA/results/sbert-kb1.csv",
-        "/datasets/FreebaseQA/results/sbert-kb2.csv",
-        "/datasets/FreebaseQA/results/sbert-kb3.csv",
+        *[
+            f"/datasets/FreebaseQA/results/kb{d}.csv" 
+            for d in range(1, 12)
+        ],
+        *[
+           f"/datasets/FreebaseQA/results/sbert-kb{d}.csv"
+           for d in range(1, 12)
+        ],
+        "/datasets/FreebaseQA/results/tog-lp-1.csv",
     ]
 
     def __init__(self):
@@ -169,9 +197,9 @@ class FBQA_Dataset(Dataset):
             result_df = pd.read_csv(r_set, dtype=str)
             result_df.rename(columns={0: "Model"}, inplace=True)
             result_df["Actual"] = self.answers
-            result_df["Model"] = result_df["Model"].fillna(" ").apply(lambda s: s.lower())
+            result_df["Model"] = result_df["Model"].fillna(" ").apply(lambda s: s.lower()).apply(lambda t: t.split(","))
             # result_df["Correct"] = result_df.apply(lambda t: str(t.Model) in t.Actual[0], axis=1)
-            result_df["rouge-l"] = result_df.apply(lambda t: self.get_rouge_score_for_answers(t.Actual, [str(t.Model)]), axis=1)
+            result_df["rouge-l"] = result_df.apply(lambda t: self.get_rouge_score_for_answers(t.Actual, t.Model), axis=1)
             result_df["Correct"] = result_df.apply(lambda t: t["rouge-l"] >= 0.5, axis=1)
             accuracy = sum(result_df.Correct) / len(result_df)
             # add to the list
@@ -203,14 +231,16 @@ class MetaQA_Dataset(Dataset):
     hops = ["1hop", "2hop", "3hop"]
     result_set_paths = [
         "/datasets/MetaQA/results/{hop}/bline.csv",
-        "/datasets/MetaQA/results/{hop}/bline2.csv",
+        # "/datasets/MetaQA/results/{hop}/bline2.csv",
         "/datasets/MetaQA/results/{hop}/kb-path.csv",
         "/datasets/MetaQA/results/{hop}/kb1.csv",
         "/datasets/MetaQA/results/{hop}/kb2.csv",
         "/datasets/MetaQA/results/{hop}/kb3.csv",
+        "/datasets/MetaQA/results/{hop}/kb4.csv",
         "/datasets/MetaQA/results/{hop}/sbert-kb1.csv",
         "/datasets/MetaQA/results/{hop}/sbert-kb2.csv",
         "/datasets/MetaQA/results/{hop}/sbert-kb3.csv",
+        "/datasets/MetaQA/results/{hop}/tog-pl-1.csv",
     ]
 
     def __init__(self):
@@ -254,6 +284,10 @@ class MetaQA_Dataset(Dataset):
                 # merge copy of test set with results
                 result_df = self.test_sets[hop].copy()
                 r_df = pd.read_csv(r_set.format(hop=hop), index_col=0)
+                if set_name == "tog-pl-1":
+                    r_df = pd.read_csv(r_set.format(hop=hop), index_col=0)
+                    r_df.Model = r_df.Model.apply(lambda t: ast.literal_eval(t)[0])
+                
                 result_df = r_df.merge(result_df, how="left", left_index=True, right_index=True)
                 # print(result_df)
                 # result_df.insert(2, "Model", r_df.Model)

@@ -37,7 +37,8 @@ chain = GraphChain.from_llm(
 )
 
 
-for depth in [1,2,3]:
+
+for depth in [4, 5, 6, 7, 8, 9, 10, 11]:
     # set the depth
     chain.exploration_depth = depth
     chain.ranking_strategy = "sbert"
