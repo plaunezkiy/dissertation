@@ -11,7 +11,7 @@ from utils.llm.mistral import MistralLLM
 from utils.prompt import GRAPH_QA_PROMPT, ENTITY_PROMPT
 from utils.file import export_results_to_file
 
-device = torch.device("cuda:0")
+device = torch.device("cuda:1")
 torch.cuda.set_device(device)
 torch.set_default_device(device)
 
@@ -37,7 +37,8 @@ chain = GraphChain.from_llm(
 )
 
 
-for depth in [1,2,3]:
+for depth in [6,7]:
+    print(f"Running for depth: {depth}")
     # set the depth
     chain.exploration_depth = depth
     chain.ranking_strategy = "bm25"

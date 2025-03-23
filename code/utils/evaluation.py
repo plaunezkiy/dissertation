@@ -1,33 +1,15 @@
 import csv
-from rouge import Rouge
+
+
 import pandas as pd
-from typing import List
 from tabulate import tabulate
 import ast
 import os
 from utils.preprocessing import preprocess_text
-import sklearn.metrics as f1_score
+from utils.scores import calculate_em_accuracy, calculate_f1_accuracy
+import numpy as np
+import re
 
-rouge = Rouge()
-
-
-def calculate_em_accuracy(actual: List[str], model: List[str]) -> float:
-    """
-    Calculate the Exact Match accuracy of the model predictions.
-    Returns the maximum exact match.
-    """
-    for a, m in zip(actual, model):
-        if a == m:
-            return 1
-    return 0
-
-
-def calculate_f1_accuracy(actual: List[str], model: List[str]) -> float:
-    """
-    Calculate the F1 score of the model predictions.
-    """
-    f1 = f1_score.f1_score(actual, model)
-    return f1
 
 
 class Dataset:
@@ -48,15 +30,17 @@ class CWQ_Dataset(Dataset):
     test_set_path = "/datasets/CWQ/cwq-1000.csv"
     result_set_paths = [
         "/datasets/CWQ/results/bline.csv",
-        # "/datasets/CWQ/results/bline2.csv",
+        "/datasets/CWQ/results/bline2.csv",
         "/datasets/CWQ/results/kb-path.csv",
         *[
             f"/datasets/CWQ/results/kb{d}.csv" 
-            for d in range(1, 4)
+            for d in range(1, 8)
         ],
-        "/datasets/CWQ/results/sbert-kb1.csv",
-        "/datasets/CWQ/results/sbert-kb2.csv",
-        "/datasets/CWQ/results/sbert-kb3.csv",
+        *[
+            f"/datasets/CWQ/results/sbert-kb{d}.csv" 
+            for d in range(1, 8)
+        ],
+        "/datasets/CWQ/results/tog-lp-4.csv",
     ]
 
     def __init__(self):
@@ -97,31 +81,21 @@ class CWQ_Dataset(Dataset):
             # compute the accuracy on the result set
             result_df = pd.read_csv(r_set, dtype=str)
             result_df.rename(columns={0: "Model"}, inplace=True)
+            values = result_df.Model.apply(lambda s: str(s).lower().split(",")).values
+            # values = np.pad(values, (0, 1000 - values.size), constant_values="")
+            # result_df.reset_index(inplace=True)
+            result_df["Model"] = values
+            result_df = result_df.reindex(range(1000), fill_value="")
+            # print(set_name, len(result_df))
             result_df["Actual"] = self.answers
-            result_df["Model"] = result_df["Model"].fillna(" ").apply(lambda s: s.lower())
-            # print(result_df)
-            # result_df["Correct"] = result_df.apply(lambda t: str(t.Model) in t.Actual[0], axis=1)
-            result_df["rouge-l"] = result_df.apply(lambda t: self.get_rouge_score_for_answers(t.Actual, [str(t.Model)]), axis=1)
-            result_df["Correct"] = result_df.apply(lambda t: t["rouge-l"] >= 0.5, axis=1)
-            accuracy = sum(result_df.Correct) / len(result_df)
+            # 
+            result_df["EM"] = result_df.apply(lambda t: calculate_em_accuracy(t.Actual, t.Model), axis=1)
+            result_df["F1"] = result_df.apply(lambda t: calculate_f1_accuracy(t.Actual, t.Model), axis=1)
+            em_accuracy = round(sum(result_df["EM"]) / len(result_df), 3)
+            f1_accuracy = round(sum(result_df["F1"]) / len(result_df), 3)
             # add to the list
-            results.append([set_name, accuracy])
+            results.append([set_name, em_accuracy, f1_accuracy])
         return results
-    
-    def get_rouge_score_for_answers(self, actual_answers, model_answers):
-        """
-        Calculate ROUGE score between every actual and every model answer.
-        Pick the highest one and return as final.
-        """
-        max_r = 0
-        # print(model_answers)
-        for a in actual_answers:
-            for m in model_answers:
-                if m and a:
-                    scores = rouge.get_scores(m[:300], a)[0]
-                    if scores["rouge-l"]["r"] > max_r:
-                        max_r = scores["rouge-l"]["r"]
-        return max_r
 
     def tabulate_performance(self):
         results = self.evaluate_answers()
@@ -143,7 +117,7 @@ class FBQA_Dataset(Dataset):
            f"/datasets/FreebaseQA/results/sbert-kb{d}.csv"
            for d in range(1, 12)
         ],
-        "/datasets/FreebaseQA/results/tog-lp-1.csv",
+        "/datasets/FreebaseQA/results/tog-lp-4.csv",
     ]
 
     def __init__(self):
@@ -181,14 +155,6 @@ class FBQA_Dataset(Dataset):
         self.result_df = result_df
         return self.result_df
     
-    def check_correct(self, model_answer, actual_answer):
-        m = preprocess_text(model_answer)
-        a = preprocess_text(actual_answer)
-        if m and a:
-            scores = rouge.get_scores(m[:300], a)[0]
-            return scores["rouge-l"]["r"] >= 0.5
-        return False
-
     def evaluate_answers(self):
         results = []
         for r_set in self.result_set_paths:
@@ -197,33 +163,30 @@ class FBQA_Dataset(Dataset):
             result_df = pd.read_csv(r_set, dtype=str)
             result_df.rename(columns={0: "Model"}, inplace=True)
             result_df["Actual"] = self.answers
-            result_df["Model"] = result_df["Model"].fillna(" ").apply(lambda s: s.lower()).apply(lambda t: t.split(","))
-            # result_df["Correct"] = result_df.apply(lambda t: str(t.Model) in t.Actual[0], axis=1)
-            result_df["rouge-l"] = result_df.apply(lambda t: self.get_rouge_score_for_answers(t.Actual, t.Model), axis=1)
-            result_df["Correct"] = result_df.apply(lambda t: t["rouge-l"] >= 0.5, axis=1)
-            accuracy = sum(result_df.Correct) / len(result_df)
+            result_df["Model"] = result_df["Model"].fillna("").apply(lambda s: s.lower()).apply(lambda t: t.split(","))
+            # 
+            result_df["EM"] = result_df.apply(lambda t: calculate_em_accuracy(t.Actual, t.Model), axis=1)
+            result_df["F1"] = result_df.apply(lambda t: calculate_f1_accuracy(t.Actual, t.Model), axis=1)
+            em_accuracy = round(sum(result_df["EM"]) / len(result_df), 3)
+            f1_accuracy = round(sum(result_df["F1"]) / len(result_df), 3)
             # add to the list
-            results.append([set_name, accuracy])
+            results.append([set_name, em_accuracy, f1_accuracy])
         return results
     
-    def get_rouge_score_for_answers(self, actual_answers, model_answers):
-        """
-        Calculate ROUGE score between every actual and every model answer.
-        Pick the highest one and return as final.
-        """
-        max_r = 0
-        for a in actual_answers:
-            for m in model_answers:
-                if m and a:
-                    scores = rouge.get_scores(m[:300], a)[0]
-                    if scores["rouge-l"]["r"] > max_r:
-                        max_r = scores["rouge-l"]["r"]
-        return max_r
-
     def tabulate_performance(self):
         results = self.evaluate_answers()
         print("FBQA")
-        print(tabulate(results, tablefmt="grid", headers=["Method", "Test Set"]))
+        print(tabulate(results, tablefmt="grid", headers=["", "EM", "F1"]))
+    
+    @staticmethod
+    def convert_entity(entity, reverse=False):
+        """
+        converts: m.07j6w into /m/07j6w
+        reverse does the opposite
+        """
+        if reverse:
+            return entity[1:].replace("/", ".")
+        return "/" + entity.replace(".", "/")
             
 
 class MetaQA_Dataset(Dataset):
@@ -231,7 +194,7 @@ class MetaQA_Dataset(Dataset):
     hops = ["1hop", "2hop", "3hop"]
     result_set_paths = [
         "/datasets/MetaQA/results/{hop}/bline.csv",
-        # "/datasets/MetaQA/results/{hop}/bline2.csv",
+        "/datasets/MetaQA/results/{hop}/bline2.csv",
         "/datasets/MetaQA/results/{hop}/kb-path.csv",
         "/datasets/MetaQA/results/{hop}/kb1.csv",
         "/datasets/MetaQA/results/{hop}/kb2.csv",
@@ -240,7 +203,8 @@ class MetaQA_Dataset(Dataset):
         "/datasets/MetaQA/results/{hop}/sbert-kb1.csv",
         "/datasets/MetaQA/results/{hop}/sbert-kb2.csv",
         "/datasets/MetaQA/results/{hop}/sbert-kb3.csv",
-        "/datasets/MetaQA/results/{hop}/tog-pl-1.csv",
+        "/datasets/MetaQA/results/{hop}/sbert-kb4.csv",
+        "/datasets/MetaQA/results/{hop}/tog-lp-4.csv",
     ]
 
     def __init__(self):
@@ -253,38 +217,25 @@ class MetaQA_Dataset(Dataset):
             test_sets[hop] = tset
         self.test_sets = test_sets
     
-    def get_rouge_score_for_answers(self, actual_answers, model_answers):
-        """
-        Calculate ROUGE score between every actual and every model answer.
-        Pick the highest one and return as final.
-        """
-        max_r = 0
-        for a in actual_answers:
-            for m in model_answers:
-                if m and a:
-                    scores = rouge.get_scores(m[:300], a)[0]
-                    if scores["rouge-l"]["r"] > max_r:
-                        max_r = scores["rouge-l"]["r"]
-        return max_r
-    
     def answers(self, hop):
         return self.test_sets[hop].Answers
 
     def evaluate_answers(self):
         results = {}
+        p = re.compile(r",|\|")
         for hop in self.hops:
             results[hop] = []
             for r_set in self.result_set_paths:
                 set_name = r_set.split("/")[-1].split(".")[0]
                 # if the file does not exist, 0 accuracy
                 if not os.path.exists(r_set.format(hop=hop)):
-                    results[hop].append([set_name, 0])
+                    results[hop].append([set_name, 0, 0])
                     continue
                 # otherwise, compute the accuracy
                 # merge copy of test set with results
                 result_df = self.test_sets[hop].copy()
                 r_df = pd.read_csv(r_set.format(hop=hop), index_col=0)
-                if set_name == "tog-pl-1":
+                if set_name == "tog-lp-4":
                     r_df = pd.read_csv(r_set.format(hop=hop), index_col=0)
                     r_df.Model = r_df.Model.apply(lambda t: ast.literal_eval(t)[0])
                 
@@ -293,14 +244,15 @@ class MetaQA_Dataset(Dataset):
                 # result_df.insert(2, "Model", r_df.Model)
                 # account for empty entries
                 result_df.fillna("", inplace=True)
-                result_df["Model"] = result_df.apply(lambda t: set(t.Model.lower().split("|")), axis=1).values
-                # compute rouge-match and correctness
-                # print(result_df)
-                result_df["rouge-l"] = result_df.apply(lambda t: self.get_rouge_score_for_answers(t.Answers, t.Model), axis=1)
-                result_df["Correct"] = result_df.apply(lambda t: t["rouge-l"] >= 0.5, axis=1)
-                accuracy = result_df.Correct.sum() / len(result_df)
+                result_df["Model"] = result_df.apply(lambda t: p.split(str(t.Model)), axis=1).values
+                # 
+                # print(result_df[["Answers", "Model"]])
+                result_df["EM"] = result_df.apply(lambda t: calculate_em_accuracy(t.Answers, t.Model), axis=1)
+                result_df["F1"] = result_df.apply(lambda t: calculate_f1_accuracy(t.Answers, t.Model), axis=1)
+                em_accuracy = round(sum(result_df["EM"]) / len(result_df), 3)
+                f1_accuracy = round(sum(result_df["F1"]) / len(result_df), 3)
                 # add to the list
-                results[hop].append([set_name, accuracy])
+                results[hop].append([set_name, em_accuracy, f1_accuracy])
         return results
     
     def tabulate_performance(self):
@@ -319,10 +271,10 @@ class MetaQA_Dataset(Dataset):
             table.append([method])
         
         for hop in self.hops:
-            header.append(hop)
+            header.extend([f"{hop}\nEM", f"{hop}\nF1"])
             # method, accuracy
-            for i, (method, accuracy) in enumerate(results[hop]):
-                table[i].append(accuracy)
+            for i, (method, em, f1) in enumerate(results[hop]):
+                table[i].extend([em, f1])
 
         print("MetaQA")
         print(tabulate(table, tablefmt="grid", headers=header))

@@ -12,7 +12,7 @@ mistral = MistralLLM()
 results = []
 id_list = []
 l = 0
-experiment_name = f"bline"
+experiment_name = f"bline2"
 res_path = f"/datasets/CWQ/results/{experiment_name}.csv"
 if os.path.isfile(res_path):
     r_df = pd.read_csv(res_path)
