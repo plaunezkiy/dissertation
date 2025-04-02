@@ -24,3 +24,4 @@ Folder breakdown:
 - `Dockerfile` has a system setup config for the container with all dependencies and python version.
 - `requirements.txt` contains a list of dependencies (python libraries) needed for the project
 - `misc/` has some experimental code with different models
+- `datasets/` contains condensed 1,000 items subsets and contain `results/` subfolder that has .csv files with the results of experiments
