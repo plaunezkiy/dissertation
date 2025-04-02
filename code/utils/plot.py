@@ -120,7 +120,7 @@ def get_broken_figure(bottom_lim=None, top_lim=None):
         )
         # top cut
         t_ax.plot([0, 1], [0, 0], transform=t_ax.transAxes, **kwargs)
-        m_ax.plot([0, 1], [1, 1], transform=m_ax.transAxes, **kwargs)
+        # m_ax.plot([0, 1], [1, 1], transform=m_ax.transAxes, **kwargs)
         # bottom cut
         m_ax.plot([0, 1], [0, 0], transform=m_ax.transAxes, **kwargs)
         b_ax.plot([0, 1], [1, 1], transform=b_ax.transAxes, **kwargs)
